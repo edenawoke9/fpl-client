@@ -86,12 +86,14 @@ npm i next-themes
 Accepts external images from specific domains.
 
 ```json
-  images: {
-    remotePatterns: [
-      { hostname: 'fantasy.premierleague.com' },
-      { hostname: 'resources.premierleague.com' },
-    ],
-  },
+{
+  "images": {
+    "remotePatterns": [
+      { "hostname": "fantasy.premierleague.com" },
+      { "hostname": "resources.premierleague.com" }
+    ]
+  }
+}
 ```
 
 ### tailwind.config.js
@@ -101,28 +103,34 @@ Additional FPL colors for:
 - team `strength`
 
 ```json
-    extend: {
-      colors: {
-        strength: {
-          1: {
-            DEFAULT: '#375523',
-            foreground: '#ffffff',
+{
+  "theme": {
+    "extend": {
+      "colors": {
+        "strength": {
+          "1": {
+            "DEFAULT": "#375523",
+            "foreground": "#ffffff"
           },
-          2: {
-            DEFAULT: '#01fc7a',
-            foreground: '#000000',
+          "2": {
+            "DEFAULT": "#01fc7a",
+            "foreground": "#000000"
           },
-          3: {
-            DEFAULT: '#e7e7e7',
-            foreground: '#000000',
+          "3": {
+            "DEFAULT": "#e7e7e7",
+            "foreground": "#000000"
           },
-          4: {
-            DEFAULT: '#ff1751',
-            foreground: '#ffffff',
+          "4": {
+            "DEFAULT": "#ff1751",
+            "foreground": "#ffffff"
           },
-          5: {
-            DEFAULT: '#80072d',
-            foreground: '#ffffff',
-          },
-        },
+          "5": {
+            "DEFAULT": "#80072d",
+            "foreground": "#ffffff"
+          }
+        }
+      }
+    }
+  }
+}
 ```
