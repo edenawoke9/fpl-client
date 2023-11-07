@@ -1,0 +1,18 @@
+{
+  "tabWidth": 2,
+  "semi": true,
+  "overrides": [
+    {
+      "files": ".jsx",
+      "options": {
+        "semi": false
+      }
+    }
+  ],
+  "trailingComma": "es5",
+  "singleQuote": true,
+  "jsxSingleQuote": true,
+  "proseWrap": "always",
+  "printWidth": 120,
+  "plugins": ["prettier-plugin-tailwindcss"]
+}
