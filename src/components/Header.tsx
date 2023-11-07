@@ -73,7 +73,7 @@ const Header = () => {
           </nav>
           <div className='item-center flex'>
             <Button variant='ghost' size='icon' className='mr-2' aria-label='Repositry'>
-              <Link href='https://github.com/roninzo/fpl-client-next' className='text-sm font-medium transition-colors'>
+              <Link href='https://github.com/roninzo/fpl-client' className='text-sm font-medium transition-colors'>
                 <Github className='h-6 w-6' />
                 <span className='sr-only'>Repositry</span>
               </Link>
