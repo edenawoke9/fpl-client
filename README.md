@@ -39,6 +39,18 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ## Custom Projet Configuration
 
+### Initial setup
+
+```bash
+npx create-next-app@latest .
+✔ Would you like to use TypeScript? … No / Yes 👍
+✔ Would you like to use ESLint? … No / Yes 👍
+✔ Would you like to use Tailwind CSS? … No / Yes 👍
+✔ Would you like to use `src/` directory? … No / Yes 👍
+✔ Would you like to use App Router? (recommended) … No / Yes 👍
+✔ Would you like to customize the default import alias (@/*)? … No 👎 / Yes
+```
+
 ### State Management
 
 Added [zustand](https://zustand-demo.pmnd.rs/) and used in [store.ts](./src/store.ts).
@@ -53,6 +65,16 @@ Added [shadcn/ui](https://ui.shadcn.com/docs/installation/next) collection of re
 
 ```bash
 npx shadcn-ui@latest init
+✔ Would you like to use TypeScript (recommended)? … no / yes 👍
+✔ Which style would you like to use? › Default
+✔ Which color would you like to use as base color? › Slate
+✔ Where is your global CSS file? … src/app/globals.css
+✔ Would you like to use CSS variables for colors? … no / yes 👍
+✔ Where is your tailwind.config.js located? … tailwind.config.js
+✔ Configure the import alias for components: … @/components
+✔ Configure the import alias for utils: … @/lib/utils
+✔ Are you using React Server Components? … no / yes 👍
+✔ Write configuration to components.json. Proceed? … yes 👍
 ```
 
 ### package.json
