@@ -1,9 +1,3 @@
-/*
-
-TODO: Tooltip instead of title for <DataTable> header ?
-https://ui.shadcn.com/docs/components/tooltip
-
-*/
 'use client';
 
 import { useState } from 'react';
@@ -22,7 +16,8 @@ import { Column, ColumnDef } from '@tanstack/react-table';
 import { filterBy } from '@/lib/array';
 import { getElementShirt, getElementStat, getElementStats, getElementTeam, getElementType } from '@/data/helpers';
 import { FPLBoostrapStatic, FPLElement } from '@/data/models';
-import { ElementStatusIcon } from './ElementStatus';
+import { ElementStatusIcon } from '@/components/ElementStatus';
+import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
 
 export const viewAllPlayers = 'all_players';
 export const viewWatchList = 'watchlist';
@@ -100,9 +95,16 @@ export const getColumns = (bootstrap_static: FPLBoostrapStatic, sortedBy: string
         if (column.id === sortedBy) setSortingDesc(column);
         const element_stat = getElementStat(bootstrap_static.element_stats, column.id)!;
         return (
-          <div className='underline decoration-dotted' title={element_stat.label}>
-            {element_stat.short_name}
-          </div>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className='underline decoration-dotted'>{element_stat.short_name}</div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{element_stat.label}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         );
       },
       cell: ({ row }) => {
@@ -127,9 +129,16 @@ export const getColumns = (bootstrap_static: FPLBoostrapStatic, sortedBy: string
         if (column.id === sortedBy) setSortingDesc(column);
         const element_stat = getElementStat(bootstrap_static.element_stats, column.id)!;
         return (
-          <div className='underline decoration-dotted' title={element_stat.label}>
-            {element_stat.short_name}
-          </div>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className='underline decoration-dotted'>{element_stat.short_name}</div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{element_stat.label}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         );
       },
     },
@@ -146,9 +155,16 @@ export const getColumns = (bootstrap_static: FPLBoostrapStatic, sortedBy: string
       header: ({ column }) => {
         setSortingDesc(column);
         return (
-          <div className='underline decoration-dotted' title={element_stat.label}>
-            **
-          </div>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className='underline decoration-dotted'>**</div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{element_stat.label}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         );
       },
     });
