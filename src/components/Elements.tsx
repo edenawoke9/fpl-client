@@ -24,16 +24,17 @@ import { getElementShirt, getElementStat, getElementStats, getElementTeam, getEl
 import { FPLBoostrapStatic, FPLElement } from '@/data/models';
 import { ElementStatusIcon } from './ElementStatus';
 
-export const allPlayersView = 'all_players';
-export const defaultViewedBy = allPlayersView;
+export const viewAllPlayers = 'all_players';
+export const viewWatchList = 'watchlist';
+export const defaultViewedBy = viewAllPlayers;
 export const defaultSortedBy = 'total_points';
 
 export const getData = (elements: FPLElement[], sortedBy: string, viewedBy: string) => {
   let data = elements;
   switch (viewedBy) {
-    case allPlayersView:
+    case viewAllPlayers:
       break;
-    case 'watchlist':
+    case viewWatchList:
       data = filterBy(data, 'id', []); // TODO: Get list of element.id's from FPLEntry
       break;
     default:
@@ -45,18 +46,12 @@ export const getData = (elements: FPLElement[], sortedBy: string, viewedBy: stri
 };
 
 export const getColumns = (bootstrap_static: FPLBoostrapStatic, sortedBy: string) => {
-  const setSorting = (column: Column<FPLElement, unknown>) => {
+  const setSortingDesc = (column: Column<FPLElement, unknown>) => {
     switch (column.getIsSorted()) {
       case 'desc':
-        // Nothing to do
-        break;
-      case 'asc':
-        console.log(`sorting ${column.id} desc...`);
-        column.toggleSorting(true); // => 'desc'
-        break;
+        break; // Nothing to do
       default:
-        console.log(`sorting ${column.id} desc...`);
-        column.toggleSorting(true); // => 'desc'
+        column.toggleSorting(true);
         break;
     }
   };
@@ -88,10 +83,9 @@ export const getColumns = (bootstrap_static: FPLBoostrapStatic, sortedBy: string
     {
       id: 'now_cost',
       accessorKey: 'now_cost',
-      enableSorting: true, // Default
       enableHiding: false,
       header: ({ column }) => {
-        if (column.id === sortedBy) setSorting(column);
+        if (column.id === sortedBy) setSortingDesc(column);
         return <div>Cost</div>;
       },
       cell: ({ row }) => {
@@ -101,10 +95,9 @@ export const getColumns = (bootstrap_static: FPLBoostrapStatic, sortedBy: string
     {
       id: 'selected_by_percent',
       accessorKey: 'selected_by_percent',
-      enableSorting: true, // Default
       enableHiding: false,
       header: ({ column }) => {
-        if (column.id === sortedBy) setSorting(column);
+        if (column.id === sortedBy) setSortingDesc(column);
         const element_stat = getElementStat(bootstrap_static.element_stats, column.id)!;
         return (
           <div className='underline decoration-dotted' title={element_stat.label}>
@@ -120,20 +113,18 @@ export const getColumns = (bootstrap_static: FPLBoostrapStatic, sortedBy: string
     {
       id: 'form',
       accessorKey: 'form',
-      enableSorting: true, // Default
       enableHiding: false,
       header: ({ column }) => {
-        if (column.id === sortedBy) setSorting(column);
+        if (column.id === sortedBy) setSortingDesc(column);
         return <div>Form</div>;
       },
     },
     {
       id: 'total_points',
       accessorKey: 'total_points',
-      enableSorting: true, // Default
       enableHiding: false,
       header: ({ column }) => {
-        if (column.id === sortedBy) setSorting(column);
+        if (column.id === sortedBy) setSortingDesc(column);
         const element_stat = getElementStat(bootstrap_static.element_stats, column.id)!;
         return (
           <div className='underline decoration-dotted' title={element_stat.label}>
@@ -152,12 +143,8 @@ export const getColumns = (bootstrap_static: FPLBoostrapStatic, sortedBy: string
     columns.push({
       id: element_stat.name,
       accessorKey: element_stat.name,
-      enableSorting: true, // Default
-      enableHiding: true, // Default
       header: ({ column }) => {
-        setSorting(column);
-        // // Show column
-        // column.toggleVisibility(true); // Default
+        setSortingDesc(column);
         return (
           <div className='underline decoration-dotted' title={element_stat.label}>
             **
@@ -177,9 +164,6 @@ export function Elements({ bootstrap_static }: { bootstrap_static: FPLBoostrapSt
   const columns = getColumns(bootstrap_static, sortedBy);
   const data = getData(bootstrap_static.elements, sortedBy, viewedBy);
 
-  // const columns = getColumns(bootstrap_static);
-  // const data = bootstrap_static.elements;
-
   return (
     <>
       <div className='flex justify-center gap-5 py-3'>
@@ -192,10 +176,10 @@ export function Elements({ bootstrap_static }: { bootstrap_static: FPLBoostrapSt
             <SelectContent className='h-[300px] overflow-y-auto'>
               <SelectGroup>
                 <SelectLabel>Global</SelectLabel>
-                <SelectItem key={allPlayersView} value={allPlayersView}>
+                <SelectItem key={viewAllPlayers} value={viewAllPlayers}>
                   All players
                 </SelectItem>
-                <SelectItem key='watchlist' value='watchlist'>
+                <SelectItem key={viewWatchList} value={viewWatchList}>
                   Watchlist
                 </SelectItem>
                 <SelectLabel>By Position</SelectLabel>
