@@ -1,24 +1,37 @@
 'use client';
 
 import * as React from 'react';
-import { ColumnDef, flexRender, getCoreRowModel, getPaginationRowModel, useReactTable } from '@tanstack/react-table';
+import {
+  ColumnDef,
+  SortingState,
+  flexRender,
+  getCoreRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
+} from '@tanstack/react-table';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Button } from '@/components/ui/button';
-import { ChevronsLeft, ChevronsRight, ChevronFirst, ChevronLast } from 'lucide-react';
+import { DataTablePagination } from '@/components/ui/data-table-pagination';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  noRowsMessage?: string; // Message to display when no data to display
+  object?: string;
 }
 
-export function DataTable<TData, TValue>({ columns, data, noRowsMessage }: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({ columns, data, object }: DataTableProps<TData, TValue>) {
+  const [sorting, setSorting] = React.useState<SortingState>([]);
+
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    state: {},
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
+    state: {
+      sorting,
+    },
   });
 
   return (
@@ -50,37 +63,14 @@ export function DataTable<TData, TValue>({ columns, data, noRowsMessage }: DataT
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className='h-24 text-center'>
-                  {noRowsMessage ? noRowsMessage : 'No results.'}
+                  {object ? `0 ${object}s shown` : 'No results.'}
                 </TableCell>
               </TableRow>
             )}
           </TableBody>
         </Table>
       </div>
-      <div className='flex items-center justify-end space-x-2 py-4'>
-        <Button
-          variant='outline'
-          size='sm'
-          onClick={() => table.resetPageIndex(true)}
-          disabled={!table.getCanPreviousPage()}
-        >
-          <ChevronFirst />
-        </Button>
-        <Button variant='outline' size='sm' onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
-          <ChevronsLeft />
-        </Button>
-        <Button variant='outline' size='sm' onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
-          <ChevronsRight />
-        </Button>
-        <Button
-          variant='outline'
-          size='sm'
-          onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-          disabled={!table.getCanNextPage()}
-        >
-          <ChevronLast />
-        </Button>
-      </div>
+      <DataTablePagination table={table} object={object} />
     </div>
   );
 }
