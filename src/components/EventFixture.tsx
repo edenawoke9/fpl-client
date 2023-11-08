@@ -6,6 +6,7 @@ import Date from '@/components/Date';
 import { TableCell, TableRow } from './ui/table';
 import { FPLFixture, FPLTeam } from '@/data/models';
 import { getTeam, getTeamBadge } from '@/data/helpers';
+import { Separator } from '@/components/ui/separator';
 
 export function EventFixture({ fixture, teams }: { fixture: FPLFixture; teams: FPLTeam[] }) {
   const team_h = getTeam(teams, fixture.team_h);
@@ -19,9 +20,9 @@ export function EventFixture({ fixture, teams }: { fixture: FPLFixture; teams: F
       </TableCell>
       <TableCell className=''>
         {fixture.started ? (
-          <div className='item-center text-middle flex flex-nowrap justify-between rounded-sm bg-slate-800 p-2 text-white'>
+          <div className='item-center flex h-8 w-12 flex-nowrap justify-center rounded-sm bg-slate-800 p-2 text-xs text-white'>
             <div>{fixture.team_h_score}</div>
-            <div className=''>&nbsp;|&nbsp;</div>
+            <Separator className='px mx-2' orientation='vertical' />
             <div>{fixture.team_a_score}</div>
           </div>
         ) : (
