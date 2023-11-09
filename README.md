@@ -103,6 +103,12 @@ Added [next-themes](https://www.npmjs.com/package/next-themes) dependency for [T
 npm i next-themes
 ```
 
+> Using `next-themes` package works but was getting this warning on browser console: **Warning: Extra attributes from the server: class,style**. Added `suppressHydrationWarning` attribute to the html in [layout.tsx](./src/app/layout.tsx), and the warning disappeared. Source: [How to fix "extra attributes from the server"?](https://www.reddit.com/r/nextjs/comments/138smpm/how_to_fix_extra_attributes_from_the_server_error/)
+
+```html
+<html suppressHydrationWarning>
+```
+
 ### next.config.js
 
 Accepts external images from specific domains.
