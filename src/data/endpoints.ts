@@ -13,6 +13,21 @@ https://www.oliverlooney.com/blogs/FPL-APIs-Explained
 Fantasy Premier League API Endpoints: A Detailed Guide
 https://medium.com/@frenzelts/fantasy-premier-league-api-endpoints-a-detailed-guide-acbd5598eb19
 
+Implemented:
+
+https://fantasy.premierleague.com/api/bootstrap-static/
+https://fantasy.premierleague.com/api/fixtures
+https://fantasy.premierleague.com/api/fixtures?event=11
+https://fantasy.premierleague.com/api/element-summary/308
+https://fantasy.premierleague.com/api/event/11/live/
+https://fantasy.premierleague.com/api/entry/3319737/
+https://fantasy.premierleague.com/api/entry/3319737/transfers/
+https://fantasy.premierleague.com/api/entry/3319737/history/
+https://fantasy.premierleague.com/api/entry/3319737/event/11/picks/
+https://fantasy.premierleague.com/api/leagues-classic/718196/standings/
+
+TODO: 
+
 https://fantasy.premierleague.com/api/fixtures?future=1
 https://fantasy.premierleague.com/api/event-status/
 https://fantasy.premierleague.com/api/me/

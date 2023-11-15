@@ -72,49 +72,36 @@ Usage
 import { create, StoreApi } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
+import { FPLElementStatus, FPLElementStatuses, zeroBootstrapStatic } from '@/data/models';
+import { FPLEvent, FPLTeam, FPLElement, FPLElementStat, FPLElementType, FPLBoostrapStatic } from '@/data/models';
 import {
-  FPLEvent,
-  FPLTeam,
-  FPLElement,
-  FPLElementStat,
-  FPLElementType,
-  FPLBoostrapStatic,
-  FPLFixture,
-  FPLEntry,
-} from '@/data/models';
-import { zeroFetched, zeroEntry, zeroFixtures, zeroBootstrapStatic } from '@/data/models';
-import {
-  searchElement,
+  searchElements,
   getElement,
   getElementType,
   getElementStats,
+  getElementAvailabilities,
   getElementStat,
   getElementShirt,
   getElementPhoto,
   getTeam,
   getTeamBadge,
   getEvent,
-  getEventFixtures,
   getCurrentEvent,
+  getElementAvailability,
 } from '@/data/helpers';
 
 interface Store {
   bootstrap_static: FPLBoostrapStatic;
-  entry: FPLEntry;
-  fixtures: FPLFixture[];
-  fetched: boolean;
   // Setters
   setBoostrapStatic: (bootstrap_static: FPLBoostrapStatic) => void;
-  setEntry: (entry: FPLEntry) => void;
-  setFixtures: (fixtures: FPLFixture[]) => void;
   // Getters
   getEvent: (id: number) => FPLEvent | undefined;
-  getEventFixtures: (event: number) => any;
   getTeam: (id: number) => FPLTeam | undefined;
   getTeamBadge: (team: FPLTeam) => string;
   getTeams: () => FPLTeam[];
   getElement: (id: number) => FPLElement | undefined;
-  getElementByName: (name: string) => FPLElement | undefined;
+  getElements: () => FPLElement[];
+  getElementSearchByName: (name: string) => FPLElement[];
   getElementTeam: (element: FPLElement) => FPLTeam;
   getElementShirt: (element: FPLElement) => string;
   getElementPhoto: (element: FPLElement) => string;
@@ -122,48 +109,32 @@ interface Store {
   getElementTypes: () => FPLElementType[];
   getElementStat: (name: string) => FPLElementStat | undefined;
   getElementStats: () => FPLElementStat[];
+  getElementAvailability: (name: string) => FPLElementStat | undefined;
+  getElementAvailabilities: () => FPLElementStat[];
+  getElementStatus: (element: FPLElement) => FPLElementStatus;
   getCurrentEvent: () => FPLEvent;
 }
 
 const zeroStore = {
   bootstrap_static: zeroBootstrapStatic,
-  entry: zeroEntry,
-  fixtures: zeroFixtures,
-  fetched: zeroFetched,
 } as Store;
 
 const store = (set: StoreApi<Store>['setState'], get: StoreApi<Store>['getState']): Store => ({
   ...zeroStore,
   // Setters
   setBoostrapStatic: (bootstrap_static) =>
-    // or?:
-    // setBoostrapStatic: (bootstrap_static) => set({ bootstrap_static }), // NOT USED!
     set((state) => ({
       ...state,
       bootstrap_static: bootstrap_static,
-    })),
-  setEntry: (entry) =>
-    // or?:
-    // setEntry: (entry) => set({ entry }),
-    set((state) => ({
-      ...state,
-      entry: entry,
-    })),
-  setFixtures: (fixtures) =>
-    // or?:
-    // setFixtures: (fixtures) => set({ fixtures }),
-    set((state) => ({
-      ...state,
-      fixtures: fixtures,
-    })),
+    })), // or setBoostrapStatic: (bootstrap_static) => set({ bootstrap_static }), ?
   // Getters
   getEvent: (id) => getEvent(get().bootstrap_static.events, id),
-  getEventFixtures: (event) => getEventFixtures(get().fixtures, event),
   getTeam: (id) => getTeam(get().bootstrap_static.teams, id),
   getTeamBadge: (team) => getTeamBadge(team),
   getTeams: () => get().bootstrap_static.teams,
   getElement: (id) => getElement(get().bootstrap_static.elements, id),
-  getElementByName: (name) => searchElement(get().bootstrap_static.elements, name),
+  getElements: () => get().bootstrap_static.elements,
+  getElementSearchByName: (name) => searchElements(get().bootstrap_static.elements, name),
   getElementTeam: (element) => get().bootstrap_static.teams[element.team - 1],
   getElementShirt: (element) => getElementShirt(element),
   getElementPhoto: (element) => getElementPhoto(element),
@@ -171,12 +142,15 @@ const store = (set: StoreApi<Store>['setState'], get: StoreApi<Store>['getState'
   getElementTypes: () => get().bootstrap_static.element_types,
   getElementStat: (name) => getElementStat(get().bootstrap_static.element_stats, name),
   getElementStats: () => getElementStats(get().bootstrap_static.element_stats),
+  getElementAvailability: (name) => getElementAvailability(name),
+  getElementAvailabilities: () => getElementAvailabilities(),
+  getElementStatus: (element) => FPLElementStatuses[element.chance_of_playing_next_round] || FPLElementStatuses[100],
   getCurrentEvent: () => getCurrentEvent(get().bootstrap_static.events),
 });
 
 const useStore = create(
   devtools<Store>(
-    // immer<Store>(
+    // devtools(immer<Store>(
     store
     // )
   )

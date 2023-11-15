@@ -13,7 +13,7 @@ const ButtonProfile = () => {
     <DropdownMenu>
       <DropdownMenuTrigger>
         <Avatar>
-          <AvatarImage src='/avatars/roninzo.jpg' />
+          <AvatarImage src='/images/avatars/roninzo.jpg' />
           <AvatarFallback>RO</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>

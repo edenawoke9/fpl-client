@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils';
 import { Table } from '@tanstack/react-table';
 import { Button } from '@/components/ui/button';
 import { ChevronLeftIcon, ChevronRightIcon, ChevronFirst, ChevronLast } from 'lucide-react';
@@ -5,14 +6,15 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 
 interface DataTablePaginationProps<TData> {
   table: Table<TData>;
-  object?: string;
+  objectName?: string;
+  className?: string;
 }
 
-export function DataTablePagination<TData>({ table, object }: DataTablePaginationProps<TData>) {
+export function DataTablePagination<TData>({ table, objectName, className }: DataTablePaginationProps<TData>) {
   return (
-    <div className='flex items-center justify-between p-2'>
+    <div className={cn('flex items-center justify-between p-2', className)}>
       <div className='flex-1 text-sm text-muted-foreground'>
-        Total: {table.getFilteredRowModel().rows.length} {object ? object : 'row'}
+        Total: {table.getFilteredRowModel().rows.length} {objectName ? objectName : 'row'}
         {table.getFilteredRowModel().rows.length > 1 ? 's' : ''}.
       </div>
       <div className='flex items-center space-x-6 lg:space-x-8'>

@@ -1,0 +1,27 @@
+warn-once.js:16 Image with src "http://localhost:3000/images/players/status-075.svg" has either width or height modified, but not the other. 
+    If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+overrideMethod                      @ console.js:213
+warnOnce                            @ warn-once.js:16
+eval                                @ image-component.js:109
+Promise.then (async)
+handleLoading                       @ image-component.js:38
+eval                                @ image-component.js:183
+commitAttachRef                     @ react-dom.development.js:21479
+safelyAttachRef                     @ react-dom.development.js:20605
+commitLayoutEffectOnFiber           @ react-dom.development.js:21300
+recursivelyTraverseLayoutEffects    @ react-dom.development.js:22729
+commitLayoutEffectOnFiber           @ react-dom.development.js:21209
+recursivelyTraverseLayoutEffects    @ react-dom.development.js:22729
+commitLayoutEffectOnFiber           @ react-dom.development.js:21209
+
+(...)
+
+commitLayoutEffects                 @ react-dom.development.js:22715
+commitRootImpl                      @ react-dom.development.js:25960
+commitRoot                          @ react-dom.development.js:25813
+commitRootWhenReady                 @ react-dom.development.js:24533
+finishConcurrentRender              @ react-dom.development.js:24498
+performConcurrentWorkOnRoot         @ react-dom.development.js:24343
+workLoop                            @ scheduler.development.js:261
+flushWork                           @ scheduler.development.js:230
+performWorkUntilDeadline            @ scheduler.development.js:534

@@ -32,7 +32,7 @@ interface FPLEventLive {
 
 interface FPLEventLiveElement {
   id: number;
-  stats: FPLElementStats[];
+  stats: FPLElementStatValues[];
   explain: FPLEventLiveElementExplain[];
 }
 
@@ -73,7 +73,7 @@ interface FPLTeam {
   badge?: string;
 }
 
-interface FPLElementStats {
+interface FPLElementStatValues {
   minutes: number;
   goals_scored: number;
   assists: number;
@@ -100,7 +100,7 @@ interface FPLElementStats {
   in_dreamteam?: boolean;
 }
 
-interface FPLElement extends FPLElementStats {
+interface FPLElement extends FPLElementStatValues {
   chance_of_playing_next_round: number;
   chance_of_playing_this_round: number;
   code: number;
@@ -174,8 +174,20 @@ interface FPLElementStat {
   label: string; // column-header tooltip
   name: string;
   // Extension
+  // redirect?: string; // TODO: display a different 'label' when selected
+  // filter?: any[]; // TODO: custom filter to overwrite default viewedBy behavior
+  // hidden?: boolean; // TODO: shouldn't be shown in the 'Sorted by' list
   short_name?: string; // column-header display
   option_name?: string; // dropdown-menu option
+  ascending?: boolean; // TODO: sorting 'asc' when value is true, else default is 'desc'
+}
+
+interface FPLElementStatus {
+  src: string;
+  width: number;
+  height: number;
+  title: string;
+  // class?: string;
 }
 
 interface FPLElementType {
@@ -204,7 +216,7 @@ interface FPLElementSummaryFixture extends FPLFixtureBase {
   difficulty: number;
 }
 
-interface FPLElementSummaryHistory extends FPLElementStats {
+interface FPLElementSummaryHistory extends FPLElementStatValues {
   element: number;
   fixture: number;
   opponent_team: number;
@@ -220,7 +232,7 @@ interface FPLElementSummaryHistory extends FPLElementStats {
   transfers_out: number;
 }
 
-interface FPLElementSummaryHistoryPast extends FPLElementStats {
+interface FPLElementSummaryHistoryPast extends FPLElementStatValues {
   season_name: string;
   element_code: number;
   start_cost: number;
@@ -511,7 +523,8 @@ export type {
   FPLTeam,
   FPLElement,
   FPLElementStat,
-  FPLElementStats,
+  FPLElementStatValues,
+  FPLElementStatus,
   FPLElementType,
   FPLElementSummary,
   FPLElementSummaryFixture,
@@ -537,6 +550,64 @@ export type {
   FPLEntryHistoryChip,
   FPLLeaguesClassicStandings,
 };
+
+/* Model Supplements 
+
+element.chance_of_playing_next_round
+  0:   0% chance of playing
+  25:  25% chance of playing
+  50:  50% chance of playing
+  75:  75% chance of playing
+  100: 100% chance of playing
+
+element.status
+  "a": available   (100% | null chance of playing)
+  "i": injured     (0% chance of playing until return date)
+  "d": doubtfull   (25% chance of playing)
+                   (50% chance of playing)
+                   (75% chance of playing)
+  "u": Unavailable (0% chance of playing until transfer back to PL)
+  "s": Suspended   (0% chance of playing until back from suspension)
+
+*/
+
+const FPLElementStatuses: {
+  [index: number]: FPLElementStatus;
+} = {
+  0: {
+    src: '/images/players/status-000.svg',
+    width: 20,
+    height: 20,
+    title: 'Unlikely to play',
+  },
+  25: {
+    src: '/images/players/status-025.svg',
+    width: 20,
+    height: 20,
+    title: '25% chance of playing',
+  },
+  50: {
+    src: '/images/players/status-050.svg',
+    width: 20,
+    height: 20,
+    title: '50% chance of playing',
+  },
+  75: {
+    src: '/images/players/status-075.svg',
+    width: 20,
+    height: 20,
+    title: '75% chance of playing',
+    // class: 'm-auto block fill-yellow-400 text-black', // instead of style="fill: rgb(255, 230, 91); color: rgb(47, 47, 47); display: block; margin: auto;"
+  },
+  100: {
+    src: '/images/players/status-100.svg',
+    width: 6,
+    height: 13,
+    title: '',
+  },
+};
+
+export { FPLElementStatuses };
 
 /* Initial states */
 

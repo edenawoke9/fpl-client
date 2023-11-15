@@ -1,10 +1,17 @@
 import { Skeleton } from '@/components/ui/skeleton';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 
 export default function Loading() {
   return (
     <main>
-      <h2>Statistics</h2>
+      <h2>Players</h2>
       <div className='container mx-auto justify-center'>
         <div className='flex justify-center gap-5 py-3'>
           <Skeleton className='h-10 w-[180px]' />

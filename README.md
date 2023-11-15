@@ -93,6 +93,7 @@ Add [tanstack/react-table](https://tanstack.com/table/v8) dependency for the `sh
 
 ```bash
 npm install @tanstack/react-table
+npm install @tanstack/match-sorter-utils
 ```
 
 ### next-themes
@@ -103,7 +104,7 @@ Added [next-themes](https://www.npmjs.com/package/next-themes) dependency for [T
 npm i next-themes
 ```
 
-> Using `next-themes` package works but was getting this warning on browser console: **Warning: Extra attributes from the server: class,style**. Added `suppressHydrationWarning` attribute to the html in [layout.tsx](./src/app/layout.tsx), and the warning disappeared. Source: [How to fix "extra attributes from the server"?](https://www.reddit.com/r/nextjs/comments/138smpm/how_to_fix_extra_attributes_from_the_server_error/)
+> Using `next-themes` package works but was getting this warning on browser console: **Warning: Extra attributes from the server: class,style**. Added `suppressHydrationWarning` attribute to the html in [layout.tsx](./src/app/layout.tsx), to hide the warning.
 
 ```html
 <html suppressHydrationWarning>

@@ -1,11 +1,15 @@
+import useStore from '@/store';
 import { Event } from '@/components/Event';
 import { fetchBootstrapStatic, fetchFixtures } from '@/data/endpoints';
 import { getCurrentEvent } from '@/data/helpers';
 
 export default async function Page() {
   const bootstrap_static = await fetchBootstrapStatic();
-  const event = getCurrentEvent(bootstrap_static.events);
-  const currFixtures = await fetchFixtures(event.id);
+
+  useStore.setState({ bootstrap_static: bootstrap_static });
+
+  const currEvent = useStore.getState().getCurrentEvent();
+  const currFixtures = await fetchFixtures(currEvent.id);
 
   return (
     <main>
@@ -14,7 +18,7 @@ export default async function Page() {
         teams={bootstrap_static.teams}
         events={bootstrap_static.events}
         fetchEventFixtures={fetchFixtures}
-        defaultEvent={event}
+        defaultEvent={currEvent}
         defaultFixtures={currFixtures}
       />
     </main>

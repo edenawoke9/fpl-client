@@ -1,22 +1,13 @@
 'use client';
 
-import { useRef } from 'react';
 import useStore from '@/store';
-import { FPLBoostrapStatic, FPLEntry, FPLFixture } from '@/data/models';
+import { useRef } from 'react';
+import { FPLBoostrapStatic } from '@/data/models';
 
-function StoreInitializer({
-  bootstrap_static,
-  fixtures,
-  entry,
-}: {
-  bootstrap_static: FPLBoostrapStatic;
-  fixtures: FPLFixture[];
-  entry: FPLEntry;
-}) {
+function StoreInitializer({ bootstrap_static }: { bootstrap_static: FPLBoostrapStatic }) {
   const initialized = useRef(false);
   if (!initialized.current) {
-    const fetched = true;
-    useStore.setState({ bootstrap_static, fixtures, entry, fetched });
+    useStore.setState({ bootstrap_static });
     initialized.current = true;
   }
   return null;

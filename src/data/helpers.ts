@@ -1,4 +1,3 @@
-/* Helpers */
 import {
   FPLEvent,
   FPLTeam,
@@ -16,16 +15,10 @@ const getElement = (elements: FPLElement[], id: number) => {
   return elements.find((element: FPLElement) => id === element.id);
 };
 
-const searchElement = (elements: FPLElement[], search: string) => {
-  let match = elements.find((element) => search === element.web_name);
+const searchElements = (elements: FPLElement[], search: string) => {
+  const match = elements.filter((element) => element.web_name.includes(search)); // web_name === "*search*" ?
   if (match) return match;
-  match = elements.find((element) => search === element.first_name);
-  if (match) return match;
-  match = elements.find((element) => search === element.second_name);
-  if (match) return match;
-  match = elements.find((element) => element.web_name.includes(search)); // web_name === "*search*" ?
-  if (match) return match;
-  return elements[0];
+  return [] as FPLElement[];
 };
 
 const getElementType = (element_types: FPLElementType[], element: FPLElement) => {
@@ -120,27 +113,27 @@ const getElementStatsExtra = () => {
       label: 'Expected Points (next)',
       option_name: 'xP (next)',
     },
-    {
-      name: 'expected_goals_per_90',
-      label: 'Expected Goals (per match)',
-      option_name: 'xG (per match)',
-    },
-    {
-      name: 'expected_assists_per_90',
-      label: 'Expected Assists (per match)',
-      option_name: 'xA (per match)',
-    },
-    {
-      name: 'expected_goal_involvements_per_90',
-      label: 'Expected Goal Involvements (per match)',
-      option_name: 'xGI (per match)',
-    },
-    {
-      name: 'expected_goals_conceded_per_90',
-      label: 'Expected Goal Conceded (per match)',
-      option_name: 'xGC (per match)',
-    },
-    // Other FPLElementStats?:
+    // {
+    //   name: 'expected_goals_per_90',
+    //   label: 'Expected Goals (per match)',
+    //   option_name: 'xG (per match)',
+    // },
+    // {
+    //   name: 'expected_assists_per_90',
+    //   label: 'Expected Assists (per match)',
+    //   option_name: 'xA (per match)',
+    // },
+    // {
+    //   name: 'expected_goal_involvements_per_90',
+    //   label: 'Expected Goal Involvements (per match)',
+    //   option_name: 'xGI (per match)',
+    // },
+    // {
+    //   name: 'expected_goals_conceded_per_90',
+    //   label: 'Expected Goal Conceded (per match)',
+    //   option_name: 'xGC (per match)',
+    // },
+    // Other FPLElementStatValues?:
     //   {
     //     "chance_of_playing_next_round": null,
     //     "chance_of_playing_this_round": null,
@@ -207,6 +200,25 @@ const getElementStats = (element_stats: FPLElementStat[]) => {
 
 const getElementStat = (element_stats: FPLElementStat[], name: string) => {
   return getElementStats(element_stats).find((element_stat: FPLElementStat) => name === element_stat.name);
+};
+
+const getElementAvailabilities = () => {
+  const data: FPLElementStat[] = [
+    {
+      name: 'news_added',
+      label: 'Most recently added',
+    },
+    {
+      name: 'chance_of_playing_next_round',
+      label: 'Chance of playing',
+      ascending: true,
+    },
+  ];
+  return data;
+};
+
+const getElementAvailability = (name: string) => {
+  return getElementAvailabilities().find((element_stat: FPLElementStat) => name === element_stat.name);
 };
 
 const getElementTeam = (teams: FPLTeam[], element: FPLElement) => {
@@ -284,12 +296,14 @@ const getElementBackgroundGraphic = () => {
 };
 
 export {
-  searchElement,
+  searchElements,
   getElement,
   getElementType,
   getElementStatsExtra,
   getElementStats,
   getElementStat,
+  getElementAvailabilities,
+  getElementAvailability,
   getElementTeam,
   getElementShirt,
   getElementPhoto,
