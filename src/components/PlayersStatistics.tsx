@@ -12,7 +12,7 @@ import { mapPropertyValues } from '@/lib/array';
 import { leFilter } from '@/lib/data-dable-filter-functions';
 
 export function getColumns() {
-  console.log(`return all columns... (getColumns)`);
+  // console.log(`return all columns... (getColumns)`);
   let sortingState: SortingState = [];
   let columns: ColumnDef<FPLElement>[] = [
     {

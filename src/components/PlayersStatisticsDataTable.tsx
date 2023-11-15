@@ -35,7 +35,8 @@ import { DataTableContent } from '@/components/ui/data-table-content';
 import { DataTablePagination } from '@/components/ui/data-table-pagination';
 import { Input } from '@/components/ui/input';
 import { Label } from '@radix-ui/react-label';
-import { mapPropertyValues, filterWithout } from '@/lib/array';
+import { mapPropertyValues, filterWithout, filterBy } from '@/lib/array';
+import { useState } from 'react';
 
 export const objectName = 'player';
 export const viewWatchList = 'watchlist';
@@ -43,58 +44,13 @@ export const viewAllPlayers = 'all_players';
 export const defaultViewedBy = viewAllPlayers;
 export const defaultSortedBy = 'total_points';
 
-/* SelectMaxCost
-
-function SelectMaxCost({ table, costs }: { table: Table<FPLElement>; costs: number[] }) {
-  return (
-    <Select onValueChange={(value) => setMaxCost(table, value)} defaultValue={`${costs[0]}`}>
-      <SelectTrigger className='w-[200px]'>
-        <SelectValue placeholder='Sorted by' />
-      </SelectTrigger>
-      <SelectContent className='h-[300px] overflow-y-auto'>
-        {costs.map((cost) => (
-          <SelectItem key={cost} value={`${cost}`}>
-            {cost / 10}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
-  );
-}
-
-*/
-
 const setSearchedBy = (table: Table<FPLElement>, searchedBy: string) => {
-  console.log('setSearchedBy...');
+  // console.log('setSearchedBy...');
   table.getColumn('web_name')?.setFilterValue(searchedBy);
 };
 
-const setViewedBy = (table: Table<FPLElement>, viewedBy: string, initialCosts: number[]) => {
-  console.log('setViewedBy...');
-  //
-  // Reseting previous `viewedBy` related filtering only
-  //
-  let columnFilters = table.getState().columnFilters;
-  columnFilters = filterWithout(columnFilters, 'id', ['id', 'element_type', 'team']);
-  table.setColumnFilters(columnFilters);
-  //
-  // Filtering
-  //
-  switch (viewedBy) {
-    case viewAllPlayers: // Nothing to do!
-      break;
-    case viewWatchList: // TODO: Get list of element.id's from FPLEntry
-      table.getColumn('id')?.setFilterValue(0);
-      break;
-    default: // 'element_type-*' and 'team-*'
-      const [columnId, value] = viewedBy.split('-');
-      table.getColumn(columnId)?.setFilterValue(parseInt(value));
-      break;
-  }
-};
-
 const setSortedBy = (table: Table<FPLElement>, sortedBy: string) => {
-  console.log('setSortedBy...');
+  // console.log('setSortedBy...');
   //
   // Sorting
   //
@@ -124,19 +80,32 @@ const setSortedBy = (table: Table<FPLElement>, sortedBy: string) => {
 };
 
 const setMaxCost = (table: Table<FPLElement>, maxCost: string) => {
-  console.log('setMaxCost...');
+  // console.log('setMaxCost...');
   table.getColumn('now_cost')?.setFilterValue(parseInt(maxCost));
 };
 
-/* Debugging
-
-import { useEffect } from 'react';
-
-useEffect(() => {
-  console.log('tableStateColumnFilters', table.getState().columnFilters, ' (PlayersStatisticsDataTable)');
-});
-
-*/
+function SelectMaxCost({ table, options }: { table: Table<FPLElement>; options: number[] }) {
+  // console.log('SelectMaxCost...');
+  const defaultCost = options[0];
+  return (
+    <Select
+      onValueChange={(value) => setMaxCost(table, value)}
+      // defaultValue={`${defaultCost}`}
+      value={`${defaultCost}`}
+    >
+      <SelectTrigger className='w-[200px]'>
+        <SelectValue placeholder='Sorted by' />
+      </SelectTrigger>
+      <SelectContent className='h-[300px] overflow-y-auto'>
+        {options.map((option) => (
+          <SelectItem key={option} value={`${option}`}>
+            {option / 10}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  );
+}
 
 interface PlayersStatisticsDataTableProps {
   data: FPLElement[];
@@ -155,6 +124,7 @@ export function PlayersStatisticsDataTable({
   visibilityState,
   className,
 }: PlayersStatisticsDataTableProps) {
+  const [costs, setCosts] = useState(initialCosts);
   const [sorting, setSorting] = React.useState<SortingState>(sortingState);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>(visibilityState);
@@ -176,6 +146,16 @@ export function PlayersStatisticsDataTable({
     },
   });
 
+  /* Debugging
+
+  import { useEffect } from 'react';
+
+  useEffect(() => {
+    console.log('tableStateColumnFilters', table.getState().columnFilters, ' (PlayersStatisticsDataTable)');
+  });
+
+  */
+
   return (
     <div className={cn('', className)}>
       <div className='flex justify-center gap-5 py-3'>
@@ -195,12 +175,31 @@ export function PlayersStatisticsDataTable({
           <span className='p-1 text-sm'>View</span>
           <Select
             onValueChange={(value) => {
-              setViewedBy(table, value, initialCosts);
+              // console.log('setViewedBy...');
               //
-              // Reload Select component 'max_now_cost_content'
+              // Reseting previous `viewedBy` related filtering only
               //
-              // initialCosts = mapPropertyValues(data, 'now_cost');
-              // <SelectMaxCost table={table} costs={initialCosts} />
+              let columnFilters = table.getState().columnFilters;
+              columnFilters = filterWithout(columnFilters, 'id', ['id', 'element_type', 'team']);
+              table.setColumnFilters(columnFilters);
+              //
+              // Filtering and updating SelectMaxCost
+              //
+              switch (value) {
+                case viewAllPlayers:
+                  // No filtering (display all)
+                  setCosts(initialCosts);
+                  break;
+                case viewWatchList: // TODO: Get list of element.id's from FPLEntry
+                  table.getColumn('id')?.setFilterValue(0);
+                  setCosts([]);
+                  break;
+                default: // 'element_type-*' and 'team-*'
+                  const [col, val] = value.split('-');
+                  table.getColumn(col)?.setFilterValue(parseInt(val));
+                  setCosts(mapPropertyValues(filterBy(data, col, parseInt(val)), 'now_cost'));
+                  break;
+              }
             }}
             defaultValue={defaultViewedBy}
           >
@@ -258,22 +257,7 @@ export function PlayersStatisticsDataTable({
         </div>
         <div className=''>
           <span className='p-1 text-sm'>Max cost</span>
-          <Select
-            name='max_now_cost'
-            onValueChange={(value) => setMaxCost(table, value)}
-            defaultValue={`${initialCosts[0]}`}
-          >
-            <SelectTrigger className='w-[200px]'>
-              <SelectValue placeholder='Sorted by' />
-            </SelectTrigger>
-            <SelectContent id='max_now_cost_content' className='h-[300px] overflow-y-auto'>
-              {initialCosts.map((cost) => (
-                <SelectItem key={cost} value={`${cost}`}>
-                  {cost / 10}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <SelectMaxCost table={table} options={costs} />
         </div>
       </div>
       <DataTableContent table={table} objectName={objectName} columnsLength={columns.length} />

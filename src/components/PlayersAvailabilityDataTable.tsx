@@ -44,12 +44,12 @@ export const defaultViewedBy = viewAllPlayers;
 export const defaultSortedBy = 'news_added';
 
 const setSearchedBy = (table: Table<FPLElement>, searchedBy: string) => {
-  console.log('setSearchedBy...');
+  // console.log('setSearchedBy...');
   table.getColumn('web_name')?.setFilterValue(searchedBy);
 };
 
 const setViewedBy = (table: Table<FPLElement>, viewedBy: string) => {
-  console.log('setViewedBy...');
+  // console.log('setViewedBy...');
   //
   // Reseting previous `viewedBy` related filtering only
   //
@@ -73,7 +73,7 @@ const setViewedBy = (table: Table<FPLElement>, viewedBy: string) => {
 };
 
 const setSortedBy = (table: Table<FPLElement>, sortedBy: string) => {
-  console.log('setSortedBy...');
+  // console.log('setSortedBy...');
   //
   // Sorting
   //

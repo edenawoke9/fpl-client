@@ -10,7 +10,7 @@ import { PlayerDialog } from '@/components/PlayerDialog';
 import { filterBy } from '@/lib/array';
 
 export function getColumns() {
-  console.log(`return all columns... (getColumns)`);
+  // console.log(`return all columns... (getColumns)`);
   let sortingState: SortingState = [
     {
       desc: true,
