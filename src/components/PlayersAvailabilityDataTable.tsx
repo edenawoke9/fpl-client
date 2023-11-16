@@ -1,9 +1,3 @@
-/*
-
-Select Scrollable: better than overflow?
-https://ui.shadcn.com/docs/components/select#scrollable
-
-*/
 'use client';
 
 import * as React from 'react';
@@ -141,12 +135,14 @@ export function PlayersAvailabilityDataTable({
           />
         </div>
         <div className=''>
-          <span className='p-1 text-sm'>View</span>
+          <Label htmlFor='view' className='p-1 text-sm'>
+            View
+          </Label>
           <Select onValueChange={(value) => setViewedBy(table, value)} defaultValue={defaultViewedBy}>
-            <SelectTrigger className='w-[180px]'>
+            <SelectTrigger id='view' className='w-[180px]'>
               <SelectValue placeholder='All players' />
             </SelectTrigger>
-            <SelectContent className='h-[300px] overflow-y-auto'>
+            <SelectContent className='max-h-80'>
               <SelectGroup>
                 <SelectLabel>Global</SelectLabel>
                 <SelectItem key={viewAllPlayers} value={viewAllPlayers}>
@@ -178,12 +174,14 @@ export function PlayersAvailabilityDataTable({
           </Select>
         </div>
         <div className=''>
-          <span className='p-1 text-sm'>Sorted by</span>
+          <Label htmlFor='sort' className='p-1 text-sm'>
+            Sorted by
+          </Label>
           <Select onValueChange={(value) => setSortedBy(table, value)} defaultValue={defaultSortedBy}>
-            <SelectTrigger className='w-[200px]'>
+            <SelectTrigger id='sort' className='w-[200px]'>
               <SelectValue placeholder='Sorted by' />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className='max-h-80'>
               {useStore
                 .getState()
                 .getElementAvailabilities()

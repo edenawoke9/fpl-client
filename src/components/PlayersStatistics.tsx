@@ -11,7 +11,11 @@ import { PlayerDialog } from '@/components/PlayerDialog';
 import { mapPropertyValues } from '@/lib/array';
 import { leFilter } from '@/lib/data-dable-filter-functions';
 
-export function getColumns() {
+function getData() {
+  return useStore.getState().getElements();
+}
+
+function getColumns() {
   // console.log(`return all columns... (getColumns)`);
   let sortingState: SortingState = [];
   let columns: ColumnDef<FPLElement>[] = [
@@ -194,8 +198,11 @@ export function getColumns() {
   };
 }
 
+function getCosts() {
+  const costs: number[] = mapPropertyValues(getData(), 'now_cost');
+  return costs;
+}
+
 export function PlayersStatistics() {
-  const data = useStore.getState().getElements();
-  const costs: number[] = mapPropertyValues(data, 'now_cost');
-  return <PlayersStatisticsDataTable data={data} initialCosts={costs} {...getColumns()} />;
+  return <PlayersStatisticsDataTable data={getData()} initialCosts={getCosts()} {...getColumns()} />;
 }

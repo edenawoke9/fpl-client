@@ -61,7 +61,7 @@ npm install zustand
 
 ### components.json
 
-Added [shadcn/ui](https://ui.shadcn.com/docs/installation/next) collection of re-usable components on top of [Tailwind CSS](https://tailwindcss.com/).
+Added [shadcn/ui](https://ui.shadcn.com/docs/installation/next) collection of re-usable components built using [Radix UI](https://www.radix-ui.com/primitives/docs/overview/introduction) and [Tailwind CSS](https://tailwindcss.com/).
 
 ```bash
 npx shadcn-ui@latest init

@@ -9,7 +9,13 @@ import { PlayersAvailabilityDataTable, defaultSortedBy } from '@/components/Play
 import { PlayerDialog } from '@/components/PlayerDialog';
 import { filterBy } from '@/lib/array';
 
-export function getColumns() {
+function getData() {
+  // const data: FPLElement[] = filterBy(useStore.getState().getElements(), 'chance_of_playing_next_round', [0, 25, 50, 75]);
+  const data: FPLElement[] = filterBy(useStore.getState().getElements(), 'status', ['i', 'd', 's']);
+  return data;
+}
+
+function getColumns() {
   // console.log(`return all columns... (getColumns)`);
   let sortingState: SortingState = [
     {
@@ -118,7 +124,5 @@ export function getColumns() {
 }
 
 export function PlayersAvailability() {
-  // const data = filterBy(useStore.getState().getElements(), 'chance_of_playing_next_round', [0, 25, 50, 75]);
-  const data = filterBy(useStore.getState().getElements(), 'status', ['i', 'd', 's']);
-  return <PlayersAvailabilityDataTable data={data} {...getColumns()} />;
+  return <PlayersAvailabilityDataTable data={getData()} {...getColumns()} />;
 }
