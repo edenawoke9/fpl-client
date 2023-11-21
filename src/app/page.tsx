@@ -1,23 +1,16 @@
-/* References
-      
-How to Create a Full-Stack Application with Next.js – A Step-By-Step Tutorial for Beginners
-https://www.freecodecamp.org/news/build-a-full-stack-application-with-nextjs/
-
-Shadcn UI instillation breaks Tailwind CSS
-https://stackoverflow.com/questions/76508244/shadcn-ui-instillation-breaks-tailwind-css
-
- */
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import useStore from '@/store';
 import Image from 'next/image';
 import Date from '@/components/Date';
-import { getElement, getEvent } from '@/data/helpers';
 import { fetchBootstrapStatic, fetchEntry } from '@/data/endpoints';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 
 export default async function Home() {
   const bootstrap_static = await fetchBootstrapStatic();
   const entry = await fetchEntry(parseInt(`${process.env.ENTRY_ID}`));
 
-  const event = getEvent(bootstrap_static.events, entry.current_event);
+  useStore.setState({ bootstrap_static: bootstrap_static });
+
+  const event = useStore.getState().getEvent(entry.current_event);
 
   const stats: {
     id: string;
@@ -42,27 +35,27 @@ export default async function Home() {
     {
       id: 'most_selected',
       title: 'Most Selected',
-      content: getElement(bootstrap_static.elements, event.most_selected!)?.web_name || '',
+      content: useStore.getState().getElement(event.most_selected!)?.web_name || '',
     },
     {
       id: 'most_transferred_in',
       title: 'Most Transferred In',
-      content: getElement(bootstrap_static.elements, event.most_transferred_in!)?.web_name || '',
+      content: useStore.getState().getElement(event.most_transferred_in!)?.web_name || '',
     },
     {
       id: 'top_element',
       title: 'Player of the Week',
-      content: getElement(bootstrap_static.elements, event.top_element!)?.web_name || '',
+      content: useStore.getState().getElement(event.top_element!)?.web_name || '',
     },
     {
       id: 'most_captained',
       title: 'Most Captained',
-      content: getElement(bootstrap_static.elements, event.most_captained!)?.web_name || '',
+      content: useStore.getState().getElement(event.most_captained!)?.web_name || '',
     },
     {
       id: 'most_vice_captained',
       title: 'Most Vice-Captained',
-      content: getElement(bootstrap_static.elements, event.most_vice_captained!)?.web_name || '',
+      content: useStore.getState().getElement(event.most_vice_captained!)?.web_name || '',
     },
     {
       id: 'bboost_played',
@@ -112,7 +105,7 @@ export default async function Home() {
           </Card>
         ))}
       </div>
-      <div>Total: {bootstrap_static.total_players.toLocaleString()} fantasy managers.</div>
+      <div>Total: {useStore.getState().bootstrap_static.total_players.toLocaleString()} fantasy managers.</div>
     </main>
   );
 }

@@ -1,6 +1,6 @@
-/* Interfaces Definitions */
+/* types Definitions */
 
-interface FPLEvent {
+type FPLEvent = {
   id: number;
   name: string;
   deadline_time: string; // datetime
@@ -24,30 +24,30 @@ interface FPLEvent {
   transfers_made: number;
   most_captained: number | null;
   most_vice_captained: number | null;
-}
+};
 
-interface FPLEventLive {
+type FPLEventLive = {
   elements: FPLEventLiveElement[];
-}
+};
 
-interface FPLEventLiveElement {
+type FPLEventLiveElement = {
   id: number;
   stats: FPLElementStatValues[];
   explain: FPLEventLiveElementExplain[];
-}
+};
 
-interface FPLEventLiveElementExplain {
+type FPLEventLiveElementExplain = {
   fixture: number;
   stats: FPLEventLiveElementExplainStat[];
-}
+};
 
-interface FPLEventLiveElementExplainStat {
+type FPLEventLiveElementExplainStat = {
   identifier: string;
   points: number;
   value: number;
-}
+};
 
-interface FPLTeam {
+type FPLTeam = {
   code: number;
   draw: number;
   form: null;
@@ -71,9 +71,9 @@ interface FPLTeam {
   pulse_id: number;
   // Extension
   badge?: string;
-}
+};
 
-interface FPLElementStatValues {
+type FPLElementStatValues = {
   minutes: number;
   goals_scored: number;
   assists: number;
@@ -98,9 +98,9 @@ interface FPLElementStatValues {
   expected_goals_conceded: string; // float
   total_points: number;
   in_dreamteam?: boolean;
-}
+};
 
-interface FPLElement extends FPLElementStatValues {
+type FPLElement = FPLElementStatValues & {
   chance_of_playing_next_round: number;
   chance_of_playing_this_round: number;
   code: number;
@@ -168,9 +168,9 @@ interface FPLElement extends FPLElementStatValues {
   // Extension
   // photo?: string; // Already exists => Overwrite during look up.
   shirt?: string;
-}
+};
 
-interface FPLElementStat {
+type FPLElementStat = {
   label: string; // column-header tooltip
   name: string;
   // Extension
@@ -180,17 +180,17 @@ interface FPLElementStat {
   short_name?: string; // column-header display
   option_name?: string; // dropdown-menu option
   ascending?: boolean; // TODO: sorting 'asc' when value is true, else default is 'desc'
-}
+};
 
-interface FPLElementStatus {
+type FPLElementStatus = {
   src: string;
   width: number;
   height: number;
   title: string;
   // class?: string;
-}
+};
 
-interface FPLElementType {
+type FPLElementType = {
   id: number;
   plural_name: string;
   plural_name_short: string;
@@ -202,21 +202,21 @@ interface FPLElementType {
   ui_shirt_specific: boolean;
   sub_positions_locked: number[];
   element_count: number;
-}
+};
 
-interface FPLElementSummary {
+type FPLElementSummary = {
   fixtures: FPLElementSummaryFixture[];
   history: FPLElementSummaryHistory[];
   history_past: FPLElementSummaryHistoryPast[];
-}
+};
 
-interface FPLElementSummaryFixture extends FPLFixtureBase {
+type FPLElementSummaryFixture = FPLFixtureBase & {
   event_name: string;
   is_home: boolean;
   difficulty: number;
-}
+};
 
-interface FPLElementSummaryHistory extends FPLElementStatValues {
+type FPLElementSummaryHistory = FPLElementStatValues & {
   element: number;
   fixture: number;
   opponent_team: number;
@@ -230,16 +230,16 @@ interface FPLElementSummaryHistory extends FPLElementStatValues {
   selected: number;
   transfers_in: number;
   transfers_out: number;
-}
+};
 
-interface FPLElementSummaryHistoryPast extends FPLElementStatValues {
+type FPLElementSummaryHistoryPast = FPLElementStatValues & {
   season_name: string;
   element_code: number;
   start_cost: number;
   end_cost: number;
-}
+};
 
-interface FPLBoostrapStatic {
+type FPLBoostrapStatic = {
   events: FPLEvent[];
   game_settings: FPLBootstrapStaticGameSettings;
   phases: FPLBootstrapStaticPhases[];
@@ -248,9 +248,9 @@ interface FPLBoostrapStatic {
   elements: FPLElement[]; // football players
   element_stats: FPLElementStat[];
   element_types: FPLElementType[];
-}
+};
 
-interface FPLBootstrapStaticGameSettings {
+type FPLBootstrapStaticGameSettings = {
   league_join_private_max: number;
   league_join_public_max: number;
   league_max_size_public_classic: number;
@@ -279,16 +279,16 @@ interface FPLBootstrapStaticGameSettings {
   transfers_sell_on_fee: number; // float
   league_h2h_tiebreak_stats: string[]; // ['+goals_scored', '-goals_conceded']
   timezone: string;
-} // TODO
+}; // TODO
 
-interface FPLBootstrapStaticPhases {
+type FPLBootstrapStaticPhases = {
   id: number;
   name: string;
   start_event: number;
   stop_event: number;
-}
+};
 
-interface FPLFixtureBase {
+type FPLFixtureBase = {
   code: number;
   event: number | null;
   finished: boolean;
@@ -301,28 +301,28 @@ interface FPLFixtureBase {
   team_a_score: number | null;
   team_h: number;
   team_h_score: number | null;
-}
+};
 
-interface FPLFixture extends FPLFixtureBase {
+type FPLFixture = FPLFixtureBase & {
   finished_provisional: boolean;
   stats: FPLFixtureStat[];
   team_h_difficulty: number;
   team_a_difficulty: number;
   pulse_id: number;
-}
+};
 
-interface FPLFixtureStat {
+type FPLFixtureStat = {
   identifier: string;
   a: FPLFixtureStatElement[];
   h: FPLFixtureStatElement[];
-}
+};
 
-interface FPLFixtureStatElement {
+type FPLFixtureStatElement = {
   value: number;
   element: number;
-}
+};
 
-interface FPLEntry {
+type FPLEntry = {
   id: number;
   joined_time: string; // datetime
   started_event: number;
@@ -345,16 +345,16 @@ interface FPLEntry {
   last_deadline_bank: number;
   last_deadline_value: number;
   last_deadline_total_transfers: number;
-}
+};
 
-interface FPLEntryLeagues {
+type FPLEntryLeagues = {
   classic: FPLEntryLeagueClassic[];
   h2h: any; // TODO []
   cup: FPLEntryLeagueCup;
   cup_matches: any; // TODO null
-} // TODO
+}; // TODO
 
-interface FPLEntryLeagueClassic {
+type FPLEntryLeagueClassic = {
   id: number;
   name: string;
   short_name: string;
@@ -374,22 +374,22 @@ interface FPLEntryLeagueClassic {
   cup_qualified: boolean | null;
   entry_rank: number;
   entry_last_rank: number;
-}
+};
 
-interface FPLEntryLeagueCup {
+type FPLEntryLeagueCup = {
   matches: any; // TODO []
   status: FPLEntryLeagueCupStatus;
   cup_league: any; // TODO null
-} // TODO
+}; // TODO
 
-interface FPLEntryLeagueCupStatus {
+type FPLEntryLeagueCupStatus = {
   qualification_event: any; // TODO null;
   qualification_numbers: any; // TODO null;
   qualification_rank: any; // TODO null;
   qualification_state: any; // TODO null;
-} // TODO
+}; // TODO
 
-interface FPLEntryTransfer {
+type FPLEntryTransfer = {
   element_in: number;
   element_in_cost: number;
   element_out: number;
@@ -397,23 +397,23 @@ interface FPLEntryTransfer {
   entry: number;
   event: number;
   time: string; // datetime
-}
+};
 
-interface FPLEntryEventPicks {
+type FPLEntryEventPicks = {
   active_chip: string | null;
   automatic_subs: FPLEntryEventPicksAutomaticSub[];
   entry_history: FPLEntryEventPicksEntryHistory;
   picks: FPLEntryEventPick[];
-}
+};
 
-interface FPLEntryEventPicksAutomaticSub {
+type FPLEntryEventPicksAutomaticSub = {
   entry: number;
   element_in: number;
   element_out: number;
   event: number;
-}
+};
 
-interface FPLEntryEventPicksEntryHistory {
+type FPLEntryEventPicksEntryHistory = {
   event: number;
   points: number;
   total_points: number;
@@ -425,23 +425,23 @@ interface FPLEntryEventPicksEntryHistory {
   event_transfers: number;
   event_transfers_cost: number;
   points_on_bench: number;
-}
+};
 
-interface FPLEntryEventPick {
+type FPLEntryEventPick = {
   element: number;
   position: number;
   multiplier: number;
   is_captain: boolean;
   is_vice_captain: boolean;
-}
+};
 
-interface FPLEntryHistory {
+type FPLEntryHistory = {
   current: FPLEntryHistoryCurrent[];
   past: FPLEntryHistoryPast[];
   chips: FPLEntryHistoryChip[];
-}
+};
 
-interface FPLEntryHistoryCurrent {
+type FPLEntryHistoryCurrent = {
   event: number;
   points: number;
   total_points: number;
@@ -453,34 +453,34 @@ interface FPLEntryHistoryCurrent {
   event_transfers: number;
   event_transfers_cost: number;
   points_on_bench: number;
-}
+};
 
-interface FPLEntryHistoryPast {
+type FPLEntryHistoryPast = {
   season_name: string;
   total_points: number;
   rank: number;
-}
+};
 
-interface FPLEntryHistoryChip {
+type FPLEntryHistoryChip = {
   name: string;
   time: string; // datetime
   event: number;
-}
+};
 
-interface FPLLeaguesClassicStandings {
+type FPLLeaguesClassicStandings = {
   new_entries: FPLLeaguesClassicNewEntries;
   last_updated_data: string; // datetime
   league: FPLLeaguesClassicLeague;
   standings: FPLLeaguesClassicStanding[];
-}
+};
 
-interface FPLLeaguesClassicNewEntries {
+type FPLLeaguesClassicNewEntries = {
   has_next: boolean;
   page: number;
   results: any; // TODO: []
-} // TODO
+}; // TODO
 
-interface FPLLeaguesClassicLeague {
+type FPLLeaguesClassicLeague = {
   id: number;
   name: string;
   created: string; // datetime
@@ -494,15 +494,15 @@ interface FPLLeaguesClassicLeague {
   has_cup: boolean;
   cup_league: number | null;
   rank: any; // TODO: null
-} // TODO
+}; // TODO
 
-interface FPLLeaguesClassicStanding {
+type FPLLeaguesClassicStanding = {
   has_next: boolean;
   page: number;
   results: FPLLeaguesClassicStandingResult[];
-}
+};
 
-interface FPLLeaguesClassicStandingResult {
+type FPLLeaguesClassicStandingResult = {
   id: number;
   event_total: number;
   player_name: string;
@@ -512,7 +512,7 @@ interface FPLLeaguesClassicStandingResult {
   total: number;
   entry: number;
   entry_name: string;
-}
+};
 
 export type {
   FPLEvent,

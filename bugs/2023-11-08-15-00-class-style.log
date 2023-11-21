@@ -1,0 +1,42 @@
+app-index.js:31 Warning: Extra attributes from the server: class,style
+    at html
+    at RedirectErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/redirect-boundary.js:72:9)
+    at RedirectBoundary (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/redirect-boundary.js:80:11)
+    at NotFoundErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/not-found-boundary.js:54:9)
+    at NotFoundBoundary (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/not-found-boundary.js:62:11)
+    at DevRootNotFoundBoundary (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/dev-root-not-found-boundary.js:32:11)
+    at ReactDevOverlay (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/internal/ReactDevOverlay.js:66:9)
+    at HotReload (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/hot-reloader-client.js:297:11)
+    at Router (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/app-router.js:158:11)
+    at ErrorBoundaryHandler (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/error-boundary.js:100:9)
+    at ErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/error-boundary.js:130:11)
+    at AppRouter (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/app-router.js:441:13)
+    at ServerRoot (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js:127:11)
+    at RSCComponent
+    at Root (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js:143:11)
+window.console.error            @ app-index.js:31
+console.error                   @ hydration-error-info.js:45
+printWarning                    @ react-dom.development.js:94
+error                           @ react-dom.development.js:68
+warnForExtraAttributes          @ react-dom.development.js:32445
+diffHydratedProperties          @ react-dom.development.js:34826
+hydrateInstance                 @ react-dom.development.js:35831
+prepareToHydrateHostInstance    @ react-dom.development.js:7208
+completeWork                    @ react-dom.development.js:19528
+completeUnitOfWork              @ react-dom.development.js:25699
+performUnitOfWork               @ react-dom.development.js:25504
+workLoopConcurrent              @ react-dom.development.js:25479
+renderRootConcurrent            @ react-dom.development.js:25435
+performConcurrentWorkOnRoot     @ react-dom.development.js:24288
+workLoop                        @ scheduler.development.js:261
+flushWork                       @ scheduler.development.js:230
+performWorkUntilDeadline        @ scheduler.development.js:534
+
+    Warning: Extra attributes from the server: style #22388
+    https://github.com/vercel/next.js/discussions/22388
+
+    How to fix 'Extra attributes from the server: style' warning in console [closed]
+    https://stackoverflow.com/questions/56353853/how-to-fix-extra-attributes-from-the-server-style-warning-in-console
+
+    Next.js Warning: Extra Attributes From the Server (FIXED)
+    https://www.youtube.com/watch?v=eR84ENHs1D8

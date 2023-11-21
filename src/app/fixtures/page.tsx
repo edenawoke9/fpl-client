@@ -1,7 +1,7 @@
 import useStore from '@/store';
-import { Event } from '@/components/Event';
+import StoreInitializer from '@/components/StoreInitializer';
 import { fetchBootstrapStatic, fetchFixtures } from '@/data/endpoints';
-import { getCurrentEvent } from '@/data/helpers';
+import { Event } from '@/components/Event';
 
 export default async function Page() {
   const bootstrap_static = await fetchBootstrapStatic();
@@ -14,13 +14,8 @@ export default async function Page() {
   return (
     <main>
       <h2>Fixtures & Results</h2>
-      <Event
-        teams={bootstrap_static.teams}
-        events={bootstrap_static.events}
-        fetchEventFixtures={fetchFixtures}
-        defaultEvent={currEvent}
-        defaultFixtures={currFixtures}
-      />
+      <StoreInitializer bootstrap_static={bootstrap_static} />
+      <Event fetchEventFixtures={fetchFixtures} defaultEvent={currEvent} defaultFixtures={currFixtures} />
     </main>
   );
 }

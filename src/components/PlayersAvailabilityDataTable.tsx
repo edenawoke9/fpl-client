@@ -28,7 +28,7 @@ import { FPLElement } from '@/data/models';
 import { DataTableContent } from '@/components/ui/data-table-content';
 import { DataTablePagination } from '@/components/ui/data-table-pagination';
 import { Input } from '@/components/ui/input';
-import { Label } from '@radix-ui/react-label';
+import { Label } from '@/components/ui/label';
 import { filterWithout } from '@/lib/array';
 
 export const objectName = 'player';
@@ -83,13 +83,13 @@ const setSortedBy = (table: Table<FPLElement>, sortedBy: string) => {
     });
 };
 
-interface PlayersStatisticsDataTableProps {
+type PlayersStatisticsDataTableProps = {
   data: FPLElement[];
   columns: ColumnDef<FPLElement>[];
   sortingState: SortingState;
   visibilityState: VisibilityState;
   className?: string;
-}
+};
 
 export function PlayersAvailabilityDataTable({
   data,

@@ -9,7 +9,7 @@ import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from '@/comp
 import { PlayersStatisticsDataTable, defaultSortedBy } from '@/components/PlayersStatisticsDataTable';
 import { PlayerDialog } from '@/components/PlayerDialog';
 import { mapPropertyValues } from '@/lib/array';
-import { leFilter } from '@/lib/data-dable-filter-functions';
+import { leFilter } from '@/lib/data-table-filter-functions';
 
 function getData() {
   return useStore.getState().getElements();
@@ -51,13 +51,7 @@ function getColumns() {
         const element = row.original;
         return (
           <PlayerDialog element={element} className='gap-2'>
-            <Image
-              src={useStore.getState().getElementShirt(element)}
-              alt='Player shirt'
-              width={24}
-              height={32}
-              priority
-            />
+            <Image src={useStore.getState().getElementShirt(element)} alt='Player shirt' width={24} height={32} />
             <div className='grid grid-rows-2'>
               <strong className='flex'>{row.getValue('web_name')}</strong>
               <span>
@@ -92,7 +86,7 @@ function getColumns() {
                 <div className='underline decoration-dotted'>{element_stat.short_name}</div>
               </TooltipTrigger>
               <TooltipContent>
-                <p>{element_stat.label}</p>
+                <span>{element_stat.label}</span>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
@@ -122,7 +116,7 @@ function getColumns() {
                 <div className='underline decoration-dotted'>{element_stat.short_name}</div>
               </TooltipTrigger>
               <TooltipContent>
-                <p>{element_stat.label}</p>
+                <span>{element_stat.label}</span>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
@@ -180,7 +174,7 @@ function getColumns() {
                     <div className='underline decoration-dotted'>**</div>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>{element_stat.label}</p>
+                    <span>{element_stat.label}</span>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>

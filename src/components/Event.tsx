@@ -1,33 +1,28 @@
 'use client';
 
 import React, { useState } from 'react';
+import useStore from '@/store';
 import Date from '@/components/Date';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { FPLEvent, FPLFixture, FPLTeam, minEvent, maxEvent } from '@/data/models';
-import { getEvent } from '@/data/helpers';
-import { EventFixtures } from '@/components/EventFixtures';
+import { FPLEvent, FPLFixture, minEvent, maxEvent } from '@/data/models';
+import { EventFixture } from './EventFixture';
+import { Table, TableBody } from '@/components/ui/table';
 
-export function Event({
-  teams,
-  events,
-  defaultEvent,
-  defaultFixtures,
-  fetchEventFixtures,
-}: {
-  teams: FPLTeam[];
-  events: FPLEvent[];
+type EventProps = {
   defaultEvent: FPLEvent;
   defaultFixtures: FPLFixture[];
   fetchEventFixtures: (event?: number) => Promise<FPLFixture[]>;
-}) {
+};
+
+export function Event({ defaultEvent, defaultFixtures, fetchEventFixtures }: EventProps) {
   const [currEvent, setCurrEvent] = useState(defaultEvent);
   const [currFixtures, setCurrFixtures] = useState(defaultFixtures);
   const [currEventID, setCurrEventID] = useState(defaultEvent.id);
 
   const fetchCurrEventFixtures = async (eventID: number) => {
     setCurrEventID(eventID);
-    setCurrEvent(getEvent(events, eventID));
+    setCurrEvent(useStore.getState().getEvent(eventID));
     setCurrFixtures(await fetchEventFixtures(eventID));
   };
 
@@ -57,7 +52,13 @@ export function Event({
           </Button>
         )}
       </div>
-      <EventFixtures teams={teams} fixtures={currFixtures} />
+      <Table className='w-70 flex justify-center'>
+        <TableBody>
+          {currFixtures.map((fixture: any) => (
+            <EventFixture key={fixture.id} fixture={fixture} />
+          ))}
+        </TableBody>
+      </Table>
     </>
   );
 }

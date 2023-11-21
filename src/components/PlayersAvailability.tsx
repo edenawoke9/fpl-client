@@ -56,13 +56,7 @@ function getColumns() {
         const element = row.original;
         return (
           <PlayerDialog element={element} className='gap-2'>
-            <Image
-              src={useStore.getState().getElementShirt(element)}
-              alt='Player shirt'
-              width={24}
-              height={32}
-              priority
-            />
+            <Image src={useStore.getState().getElementShirt(element)} alt='Player shirt' width={24} height={32} />
             <div className='grid grid-rows-2'>
               <strong className='flex'>{row.getValue('web_name')}</strong>
               <span>

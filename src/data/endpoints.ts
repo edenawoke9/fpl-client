@@ -1,3 +1,55 @@
+'use server';
+
+import {
+  FPLEventLive,
+  FPLElementSummary,
+  FPLBoostrapStatic,
+  FPLFixture,
+  FPLEntry,
+  FPLEntryTransfer,
+  FPLEntryEventPicks,
+  FPLEntryHistory,
+  FPLLeaguesClassicStandings,
+} from '@/data/models';
+import {
+  minEvent,
+  maxEvent,
+  zeroEntry,
+  zeroFixtures,
+  zeroBootstrapStatic,
+  zeroElementSummary,
+  zeroEventLive,
+  zeroEntryTransfers,
+  zeroEntryEventPicks,
+  zeroEntryHistory,
+  zeroLeaguesClassicStandings,
+} from '@/data/models';
+
+async function fetchEndpoint<T>(endpoint: string, zeroData: T): Promise<T> {
+  const empty = zeroData;
+  if (!endpoint) return empty;
+  if (process.env.THROTTLE === 'true') {
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+  }
+  let data = empty;
+  try {
+    const resp = await fetch(`https://fantasy.premierleague.com/api/${endpoint}`);
+    if (!resp.ok) {
+      throw new Error(`could not fetch FPL data from ${endpoint}`, {
+        cause: { status: resp.status },
+      });
+    } else {
+      data = resp.json() as T;
+    }
+  } catch (err) {
+    // switch (err.cause.status) {
+    // case 404: break;
+    // case 403: break;
+    // }
+  }
+  return data;
+}
+
 /* FPL Endpoints 
 
 Fantasy Premier League
@@ -37,58 +89,6 @@ https://fantasy.premierleague.com/api/team/set-piece-notes/
 https://fantasy.premierleague.com/api/stats/most-valuable-teams/
 
 */
-'use server';
-
-import {
-  FPLEventLive,
-  FPLElementSummary,
-  FPLBoostrapStatic,
-  FPLFixture,
-  FPLEntry,
-  FPLEntryTransfer,
-  FPLEntryEventPicks,
-  FPLEntryHistory,
-  FPLLeaguesClassicStandings,
-} from '@/data/models';
-import {
-  minEvent,
-  maxEvent,
-  zeroEntry,
-  zeroFixtures,
-  zeroBootstrapStatic,
-  zeroElementSummary,
-  zeroEventLive,
-  zeroEntryTransfers,
-  zeroEntryEventPicks,
-  zeroEntryHistory,
-  zeroLeaguesClassicStandings,
-} from '@/data/models';
-
-async function fetchEndpoint(endpoint: string, zeroData?: any) {
-  const empty = zeroData ? zeroData : undefined;
-  if (!endpoint) return empty;
-  if (process.env.THROTTLE === 'true') {
-    await new Promise((resolve) => setTimeout(resolve, 3000));
-  }
-  let data = empty;
-  const url = 'https://fantasy.premierleague.com/api/' + endpoint;
-  try {
-    const res = await fetch(url);
-    if (!res.ok) {
-      throw new Error(`could not fetch fantasy.premierleague.com data from ${endpoint} (${res.status})`, {
-        cause: { status: res.status },
-      });
-    } else {
-      data = res.json();
-    }
-  } catch (err) {
-    // switch (err.cause.status) {
-    // case 404: break;
-    // case 403: break;
-    // }
-  }
-  return data;
-}
 
 async function fetchBootstrapStatic(): Promise<FPLBoostrapStatic> {
   return await fetchEndpoint('bootstrap-static/', zeroBootstrapStatic);

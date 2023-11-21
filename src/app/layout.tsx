@@ -4,9 +4,6 @@ import Header from '@/components/Header';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
-// 'use client';
-// import { ThemeProvider } from 'next-themes';
-
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {

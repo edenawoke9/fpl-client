@@ -2,22 +2,26 @@
 
 import React from 'react';
 import Link from 'next/link';
+import ButtonProfile from '@/components/ProfileButton';
+import Container from '@/components/ui/container';
+import { Button } from '@/components/ui/button';
 import { useTheme } from 'next-themes';
 import { Bell, Github, Menu, Moon, Sun } from 'lucide-react';
-import { Button } from './ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import Container from './ui/container';
-import ButtonProfile from './ProfileButton';
 
-// import Image from 'next/image';
+/* FPL logo
 
-// <Image
-//   className='px-3'
-//   src='/images/logo.png'
-//   alt='FPL Logo'
-//   width={360}
-//   height={240}
-// />
+import Image from 'next/image';
+
+<Image
+  className='px-3'
+  src='/images/logo.png'
+  alt='FPL Logo'
+  width={360}
+  height={240}
+/>
+
+*/
 
 const routes = [
   {
@@ -61,15 +65,11 @@ const Header = () => {
               </h1>
             </Link>
           </div>
-          {/* 'flex hidden' => 'flex' applies the same CSS properties as 'hidden'? */}
-          <nav className='mx-6 flex hidden items-center space-x-4 md:block lg:space-x-6'>
+          {/* flex */}
+          <nav className='mx-6 hidden items-center space-x-4 md:block lg:space-x-6'>
             {routes.map((route, i) => (
               <Button key={`route-button-${i}`} asChild variant='ghost'>
-                <Link
-                  key={`route-link-${i}`}
-                  href={route.href}
-                  className='text-sm font-medium transition-colors'
-                >
+                <Link key={`route-link-${i}`} href={route.href} className='text-sm font-medium transition-colors'>
                   {route.label}
                 </Link>
               </Button>
@@ -77,10 +77,7 @@ const Header = () => {
           </nav>
           <div className='item-center flex'>
             <Button variant='ghost' size='icon' className='mr-2' aria-label='Repositry'>
-              <Link
-                href='https://github.com/roninzo/fpl-client'
-                className='text-sm font-medium transition-colors'
-              >
+              <Link href='https://github.com/roninzo/fpl-client' className='text-sm font-medium transition-colors'>
                 <Github className='h-6 w-6' />
                 <span className='sr-only'>Repositry</span>
               </Link>
