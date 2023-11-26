@@ -3,13 +3,15 @@
 import * as React from 'react';
 import useStore from '@/store';
 import Image from 'next/image';
+import { leFilter } from '@/lib/data-table-filter-functions';
 import { FPLElement } from '@/data/models';
+import { mapPropertyValues } from '@/lib/array';
 import { ColumnDef, SortingState, VisibilityState } from '@tanstack/react-table';
 import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
 import { PlayersStatisticsDataTable, defaultSortedBy } from '@/components/PlayersStatisticsDataTable';
 import { PlayerDialog } from '@/components/PlayerDialog';
-import { mapPropertyValues } from '@/lib/array';
-import { leFilter } from '@/lib/data-table-filter-functions';
+import { PlayerStatus } from '@/components/PlayerStatus';
+import { PlayerListItem } from '@/components/PlayerListItem';
 
 function getData() {
   return useStore.getState().getElements();
@@ -26,17 +28,9 @@ function getColumns() {
       enableHiding: false,
       header: '',
       cell: ({ row }) => {
-        const element = row.original;
-        const status = useStore.getState().getElementStatus(element);
         return (
-          <PlayerDialog element={element} className='w-5 justify-center'>
-            <Image
-              src={status.src}
-              alt={status.title}
-              title={status.title}
-              width={status.width}
-              height={status.height}
-            />
+          <PlayerDialog element={row.original}>
+            <PlayerStatus element={row.original} />
           </PlayerDialog>
         );
       },
@@ -48,17 +42,9 @@ function getColumns() {
       enableHiding: false,
       header: 'Player',
       cell: ({ row }) => {
-        const element = row.original;
         return (
-          <PlayerDialog element={element} className='gap-2'>
-            <Image src={useStore.getState().getElementShirt(element)} alt='Player shirt' width={24} height={32} />
-            <div className='grid grid-rows-2'>
-              <strong className='flex'>{row.getValue('web_name')}</strong>
-              <span>
-                {useStore.getState().getElementType(element)?.singular_name_short}{' '}
-                {useStore.getState().getElementTeam(element).short_name}
-              </span>
-            </div>
+          <PlayerDialog element={row.original}>
+            <PlayerListItem element={row.original} />
           </PlayerDialog>
         );
       },

@@ -17,8 +17,8 @@
 /build
 
 # misc
+/private
 .DS_Store
-NOTES.md
 *.pem
 *.*~
 
