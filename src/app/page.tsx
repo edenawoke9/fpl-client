@@ -13,71 +13,72 @@ export default async function Home() {
   const event = useStore.getState().getEvent(entry.current_event);
 
   const stats: {
-    id: string;
-    title: string;
-    content: string;
-  }[] = [
-    {
-      id: 'average_entry_score',
-      title: 'Average Points',
-      content: `${event.average_entry_score}`,
-    },
-    {
-      id: 'highest_score',
-      title: 'Highest Points',
-      content: `${event.highest_score}`,
-    },
-    {
-      id: 'transfers_made',
-      title: 'Transfers Made',
-      content: event.transfers_made.toLocaleString(),
-    },
-    {
-      id: 'most_selected',
-      title: 'Most Selected',
-      content: useStore.getState().getElement(event.most_selected!)?.web_name || '',
-    },
-    {
-      id: 'most_transferred_in',
-      title: 'Most Transferred In',
-      content: useStore.getState().getElement(event.most_transferred_in!)?.web_name || '',
-    },
-    {
-      id: 'top_element',
-      title: 'Player of the Week',
-      content: useStore.getState().getElement(event.top_element!)?.web_name || '',
-    },
-    {
-      id: 'most_captained',
-      title: 'Most Captained',
-      content: useStore.getState().getElement(event.most_captained!)?.web_name || '',
-    },
-    {
-      id: 'most_vice_captained',
-      title: 'Most Vice-Captained',
-      content: useStore.getState().getElement(event.most_vice_captained!)?.web_name || '',
-    },
-    {
-      id: 'bboost_played',
-      title: 'Bench Boost Played',
-      content: event.chip_plays[0].num_played.toLocaleString() || ' ',
-    },
-    {
-      id: 'freehit_played',
-      title: 'Free Hit Played',
-      content: event.chip_plays[1].num_played.toLocaleString() || ' ',
-    },
-    {
-      id: 'wildcard_played',
-      title: 'Wildcards Played',
-      content: event.chip_plays[2].num_played.toLocaleString() || ' ',
-    },
-    {
-      id: '3xc_played',
-      title: 'Tripe Captain Played',
-      content: event.chip_plays[3].num_played.toLocaleString()  || ' ',
-    },
-  ];
+  id: string;
+  title: string;
+  content: string;
+}[] = [
+  {
+    id: 'average_entry_score',
+    title: 'Average Points',
+    content: `${event.average_entry_score}`,
+  },
+  {
+    id: 'highest_score',
+    title: 'Highest Points',
+    content: `${event.highest_score}`,
+  },
+  {
+    id: 'transfers_made',
+    title: 'Transfers Made',
+    content: event.transfers_made?.toLocaleString() || ' ',
+  },
+  {
+    id: 'most_selected',
+    title: 'Most Selected',
+    content: useStore.getState().getElement(event.most_selected!)?.web_name || ' ',
+  },
+  {
+    id: 'most_transferred_in',
+    title: 'Most Transferred In',
+    content: useStore.getState().getElement(event.most_transferred_in!)?.web_name || ' ',
+  },
+  {
+    id: 'top_element',
+    title: 'Player of the Week',
+    content: useStore.getState().getElement(event.top_element!)?.web_name || ' ',
+  },
+  {
+    id: 'most_captained',
+    title: 'Most Captained',
+    content: useStore.getState().getElement(event.most_captained!)?.web_name || ' ',
+  },
+  {
+    id: 'most_vice_captained',
+    title: 'Most Vice-Captained',
+    content: useStore.getState().getElement(event.most_vice_captained!)?.web_name || ' ',
+  },
+  {
+    id: 'bboost_played',
+    title: 'Bench Boost Played',
+    content: event.chip_plays && event.chip_plays[0]?.num_played?.toLocaleString() || ' ',
+  },
+  {
+    id: 'freehit_played',
+    title: 'Free Hit Played',
+    content: event.chip_plays && event.chip_plays[1]?.num_played?.toLocaleString() || ' ',
+  },
+  {
+    id: 'wildcard_played',
+    title: 'Wildcards Played',
+    content: event.chip_plays && event.chip_plays[2]?.num_played?.toLocaleString() || ' ',
+  },
+  {
+    id: '3xc_played',
+    title: 'Triple Captain Played',
+    content: event.chip_plays && event.chip_plays[3]?.num_played?.toLocaleString() || ' ',
+  },
+];
+
 
   return (
     <main className='grid h-screen place-items-center'>
