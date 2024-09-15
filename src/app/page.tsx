@@ -60,22 +60,22 @@ export default async function Home() {
     {
       id: 'bboost_played',
       title: 'Bench Boost Played',
-      content: event.chip_plays[0].num_played.toLocaleString() : ' ',
+      content: event.chip_plays[0].num_played.toLocaleString() || ' ',
     },
     {
       id: 'freehit_played',
       title: 'Free Hit Played',
-      content: event.chip_plays[1].num_played.toLocaleString() : ' ',
+      content: event.chip_plays[1].num_played.toLocaleString() || ' ',
     },
     {
       id: 'wildcard_played',
       title: 'Wildcards Played',
-      content: event.chip_plays[2].num_played.toLocaleString() : ' ',
+      content: event.chip_plays[2].num_played.toLocaleString() || ' ',
     },
     {
       id: '3xc_played',
       title: 'Tripe Captain Played',
-      content: event.chip_plays[3].num_played.toLocaleString()  : ' ',
+      content: event.chip_plays[3].num_played.toLocaleString()  || ' ',
     },
   ];
 
